@@ -1,0 +1,32 @@
+﻿@model WebClient.Auth.UserRegistrationData
+@{
+    ViewData["Title"] = "registration";
+    Layout = "_Layout";
+}
+
+<div>
+    <div>
+        <div>
+            <form asp-controller="Account" asp-action="Register" asp-antiforgery="true" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div>
+                    <input asp-for="UserName" />
+                </div>
+
+                <div>
+                    <input asp-for="Password" />
+                </div>
+
+                <div>
+                    <input asp-for="ConfirmPassword" />
+                </div>
+
+                <div>
+                    <button type="submit">Зарегистрироваться</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

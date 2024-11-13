@@ -1,0 +1,21 @@
+﻿@model WebClient.Auth.UserLoginData
+@{
+    ViewData["Title"] = "login";
+    Layout = "_Layout";
+}
+
+<div asp-validation-summary="ModelOnly"></div>
+<form asp-controller="Account" asp-action="Login" asp-antiforgery="true" method="post">
+    <div>
+        <input asp-for="UserName"/>
+    </div>
+
+    <div>
+        <input asp-for="Password"/>
+    </div>
+    <input type="hidden" asp-for="ReturnUrl" />
+    <div>
+        <button type="submit" value="submit">Войти</button>
+    </div>
+</form>
+

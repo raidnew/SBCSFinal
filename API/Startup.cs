@@ -28,14 +28,26 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddDbContext<DBContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<DBContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DBCRM")));
+            ConfigureJWT(services);
 
-            const string signingSecurityKey = "111111111111111111111111111111111111111111111111";
-            var signingKey = new SigningSymmetricKey(signingSecurityKey);
-            services.AddSingleton<IJwtSigningEncodingKey>(signingKey);
+            services.AddControllers();
 
-            //services.AddControllers();
+            services.AddIdentity<AppUser, IdentityRole>()
+                .AddEntityFrameworkStores<DBContext>()
+                .AddDefaultTokenProviders();
 
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequiredLength = 1;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireDigit = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;
+                options.Lockout.AllowedForNewUsers = true;
+            });
+
+            /*
             services.AddMvc(option => 
                 {
                     option.EnableEndpointRouting = false;
@@ -50,12 +62,20 @@ namespace API
             var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);
             identityBuilder.AddEntityFrameworkStores<DBContext>();
             identityBuilder.AddSignInManager<SignInManager<AppUser>>();
+            */
 
+        }
+
+        private void ConfigureJWT(IServiceCollection services)
+        {
+            const string signingSecurityKey = "111111111111111111111111111111111111111111111111";
+            var signingKey = new SigningSymmetricKey(signingSecurityKey);
+            services.AddSingleton<IJwtSigningEncodingKey>(signingKey);
             const string jwtSchemeName = "JwtBearer";
 
             var signingDecodingKey = (IJwtSigningDecodingKey)signingKey;
             services
-                .AddAuthentication(options => 
+                .AddAuthentication(options =>
                 {
                     options.DefaultAuthenticateScheme = jwtSchemeName;
                     options.DefaultChallengeScheme = jwtSchemeName;

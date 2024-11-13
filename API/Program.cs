@@ -1,5 +1,11 @@
+using API.Context;
+using API.Models;
+using CSWork21.Data;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 
 namespace API
 {
@@ -7,7 +13,18 @@ namespace API
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            IHost host = CreateHostBuilder(args).Build();
+
+            using (IServiceScope scope = host.Services.CreateScope())
+            {
+                IServiceProvider provider = scope.ServiceProvider;
+                DBContext phoneBookDBContext = provider.GetRequiredService<DBContext>();
+                UserManager<AppUser> userManager = provider.GetRequiredService<UserManager<AppUser>>();
+                RoleManager<IdentityRole> roleManager = provider.GetRequiredService<RoleManager<IdentityRole>>();
+                CreateDB.TryInit(phoneBookDBContext, userManager, roleManager, true);
+            }
+
+            host.Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
