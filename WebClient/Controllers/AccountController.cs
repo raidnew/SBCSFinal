@@ -30,7 +30,7 @@ namespace WebClient.Controllers
             return View(new UserLoginData() { ReturnUrl = returnUrl });
         }
 
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost]
         public async Task<IActionResult> Login(UserLoginData authData)
         {
             HttpResponseMessage response = _authConnector.Login(authData);
