@@ -1,27 +1,25 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System.Diagnostics;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using WebClient.Auth;
-using WebClient.Models;
-using WebClient.Net;
 
 namespace WebClient.Controllers
 {
     public class AccountController : Controller
     {
-        private AuthConnector _authConnector;
-        /*
-        private readonly UserManager<AppUser> _userManager;
-        private readonly SignInManager<AppUser> _signInManager;
-        */
+        //private AuthConnector _authConnector;
+        private readonly string _serverAddress;
+        private HttpClient HttpClient { get; set; }
+
         public AccountController()
-        //public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
         {
-            _authConnector = new AuthConnector();
-//            _userManager = userManager;
-            //_signInManager = signInManager;
+            _serverAddress = "http://localhost:5555";
+            HttpClient = new HttpClient();
         }
 
         [HttpGet]
@@ -33,8 +31,20 @@ namespace WebClient.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(UserLoginData authData)
         {
-            HttpResponseMessage response = _authConnector.Login(authData);
-            
+
+            AuthenticationRequest requrest = new AuthenticationRequest();
+            requrest.Name = authData.UserName;
+            requrest.Password = authData.Password;
+
+            HttpResponseMessage response = HttpClient.PostAsync(
+                requestUri: GetUrl("Auth"),
+                content: new StringContent(JsonConvert.SerializeObject(requrest), Encoding.UTF8,
+                mediaType: "application/json")
+            ).Result;
+
+            string jwt = await response.Content.ReadAsStringAsync();
+            HttpContext.Session.SetString("token", jwt);
+
             return View(authData);
         }
 
@@ -64,6 +74,11 @@ namespace WebClient.Controllers
         private RedirectToActionResult RedirectToMainPage()
         {
             return RedirectToAction("ContactsList", "PhoneBook");
+        }
+
+        private string GetUrl(string action)
+        {
+            return $"{_serverAddress}/api/{action}";
         }
     }
 }

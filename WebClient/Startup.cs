@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 
 namespace WebClient
 {
@@ -23,9 +24,6 @@ namespace WebClient
 
             services.AddMvc();
 
-            //services.AddIdentity<AppUser, IdentityRole>();
-            //services.AddScoped<UserManager>();
-
             services.Configure<IdentityOptions>(options =>
             {
                 options.Password.RequiredLength = 1;
@@ -36,6 +34,9 @@ namespace WebClient
                 options.Lockout.AllowedForNewUsers = true;
             });
 
+            services.AddSession();
+
+            /*
             services.ConfigureApplicationCookie(options =>
             {
                 options.Cookie.HttpOnly = true;
@@ -44,6 +45,7 @@ namespace WebClient
                 options.AccessDeniedPath = "/Account/AccessDenied";
                 options.SlidingExpiration = true;
             });
+            */
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,14 +61,13 @@ namespace WebClient
             }
             app.UseStaticFiles();
             app.UseRouting();
-            app.UseAuthorization();
-            app.UseAuthentication();
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Account}/{action=Login}/{id?}");
+                    pattern: "{controller}/{action}/{id?}");
             });
         }
     }

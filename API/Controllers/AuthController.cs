@@ -7,7 +7,6 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -29,26 +28,35 @@ namespace API.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<string>> PostAsync(AuthenticationRequest authRequest, [FromServices] IJwtSigningEncodingKey signingEncodingKey)
         {
-            var claims = new Claim[]
-            {
-                new Claim(ClaimTypes.NameIdentifier, authRequest.Name)
-            };
-
             Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(
                 authRequest.Name,
                 authRequest.Password,
                 false,
                 false);
 
+            List<Claim> claimsList = new List<Claim>();
 
             if (result.Succeeded)
             {
-                claims[0] = new Claim(ClaimTypes.Authentication, authRequest.Name);
+                claimsList.Add(new Claim(ClaimTypes.Name, authRequest.Name));
+                claimsList.Add(new Claim(ClaimTypes.Authentication, authRequest.Name));
+                //claimsList.Add(new Claim(ClaimTypes.Authentication, authRequest.Name));
+
+                /*
+                _userManager.GetUserAsync
+
+                foreach (var role in user.Roles)
+                    claimsList.Add(new Claim(ClaimTypes.Role, role));
+                */
             }
             else
             {
-                claims[0] = new Claim(ClaimTypes.Anonymous, authRequest.Name);
+                claimsList.Add(new Claim(ClaimTypes.Name, authRequest.Name));
+                //claimsList.Add(new Claim(ClaimTypes.Authentication, ));
+                //claimsList.Add(new Claim(ClaimTypes.Anonymous, authRequest.Name));
             }
+
+            Claim[] claims = claimsList.ToArray();
 
             var token = new JwtSecurityToken(
                 issuer: "DemoApp",
@@ -60,30 +68,13 @@ namespace API.Controllers
                         signingEncodingKey.SigningAlgorithm)
             );
 
-            string jwtToken = new JwtSecurityTokenHandler().WriteToken(token);
-            return jwtToken;
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
         [HttpGet]
         public ActionResult<string> Get()
         {
-            string test = "";
-
-            foreach (Claim claim in this.HttpContext.User.Claims)
-            {
-                test += claim.Type + ":" + claim.Value + "\n";
-            }
-
-
-            foreach (ClaimsIdentity claim in this.HttpContext.User.Identities)
-            {
-                test += claim.Name + ":" + claim.ToString() + "\n";
-            }
-
-            
-            test += this.HttpContext.User.Identity.Name + ":" + this.HttpContext.User.Identity.IsAuthenticated + "\n";
-
-            return test;
+            return "test";
         }
     }
 }

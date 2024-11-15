@@ -46,24 +46,6 @@ namespace API
                 options.Password.RequireLowercase = false;
                 options.Lockout.AllowedForNewUsers = true;
             });
-
-            /*
-            services.AddMvc(option => 
-                {
-                    option.EnableEndpointRouting = false;
-                    var policy = new AuthorizationPolicyBuilder()
-                        .RequireAuthenticatedUser()
-                        .Build();
-                    option.Filters.Add(new AuthorizeFilter(policy));
-                })
-                .SetCompatibilityVersion(CompatibilityVersion.Latest);
-
-            var builder = services.AddIdentityCore<AppUser>();
-            var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);
-            identityBuilder.AddEntityFrameworkStores<DBContext>();
-            identityBuilder.AddSignInManager<SignInManager<AppUser>>();
-            */
-
         }
 
         private void ConfigureJWT(IServiceCollection services)
