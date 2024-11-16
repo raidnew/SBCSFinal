@@ -29,7 +29,6 @@ namespace WebClient.Net
                 content: new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8,
                 mediaType: "application/json")
             ).Result;
-
             string jwt = await response.Content.ReadAsStringAsync();
             return jwt;
         }

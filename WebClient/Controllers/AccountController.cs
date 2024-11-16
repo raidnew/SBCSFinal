@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -15,6 +18,7 @@ using System.Threading.Tasks;
 using WebClient.Auth;
 using WebClient.Models;
 using WebClient.Net;
+using Microsoft.AspNetCore.Identity;
 
 namespace WebClient.Controllers
 {
@@ -23,32 +27,44 @@ namespace WebClient.Controllers
         [HttpGet]
         public IActionResult Login(string returnUrl)
         {
-            return View(new UserLoginData() { ReturnUrl = returnUrl });
+            if (HttpContext.User.Identity.IsAuthenticated)
+                return RedirectToMainPage();
+            else
+                return View(new UserLoginData() { ReturnUrl = returnUrl });
         }
 
-        [HttpPost]
+        [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(UserLoginData authData)
         {
+            if (ModelState.IsValid)
+            {
+                AuthenticationRequest request = new AuthenticationRequest();
+                request.Name = authData.UserName;
+                request.Password = authData.Password;
 
-            AuthenticationRequest request = new AuthenticationRequest();
-            request.Name = authData.UserName;
-            request.Password = authData.Password;
+                ApiConnector apiConnector = new ApiConnector();
+                string jwt = await apiConnector.AuthRequest(request);
+                HttpContext.Session.SetString("token", jwt);
+                AuthUserByJwt(jwt);
 
-            ApiConnector apiConnector = new ApiConnector();
-            string jwt = await apiConnector.AuthRequest(request);
-            HttpContext.Session.SetString("token", jwt);
-
-            var handler = new JwtSecurityTokenHandler();
-            var jwtSecurityToken = handler.ReadJwtToken(jwt);
-            var identity = new ClaimsIdentity(jwtSecurityToken.Claims, "basic");
-            HttpContext.User = new ClaimsPrincipal(identity);
-
-            return View(authData);
+                return View(authData);
+            }
+            else
+            {
+                return View(authData);
+            }
         }
 
-        [HttpGet, Authorize]
+        public IActionResult LoginInfo()
+        {
+            return View();
+        }
+
+        [HttpGet]
         public async Task<IActionResult> Logout()
         {
+            HttpContext.Session.Remove("token");
+            HttpContext.User = new ClaimsPrincipal();
             return RedirectToMainPage();
         }
 
@@ -71,7 +87,7 @@ namespace WebClient.Controllers
 
         private RedirectToActionResult RedirectToMainPage()
         {
-            return RedirectToAction("ContactsList", "PhoneBook");
+            return RedirectToAction("Index", "Home");
         }
     }
 }
