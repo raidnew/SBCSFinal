@@ -1,10 +1,16 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using static System.Net.WebRequestMethods;
+using System.Net.Http.Headers;
+using System.Net.Http;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace WebClient
 {
@@ -62,13 +68,39 @@ namespace WebClient
             app.UseStaticFiles();
             app.UseRouting();
             app.UseSession();
+            //app.UseAuthorization();
 
+            /*
+            app.Use(async (context, next) =>
+            {
+                string jwt = context.Session.GetString("token");
+                if (jwt != null)
+                {
+                    var handler = new JwtSecurityTokenHandler();
+                    var jwtSecurityToken = handler.ReadJwtToken(jwt);
+                    var identity = new ClaimsIdentity(jwtSecurityToken.Claims, "basic");
+                    context.User = new ClaimsPrincipal(identity);
+                }
+//                await next(context);
+            });
+            */
+
+            
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller}/{action}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+            
+            /*
+            app.Map(
+                name: "default",
+                pattern: "{*slug}",
+                defaults: new { Controller = "Home", Action = "Index" });
+            */
         }
+
     }
 }

@@ -19,11 +19,7 @@ namespace API.Controllers
 
             if (authHeader != null)
             {
-
-                var jwtEncodedString = authHeader.Substring(7);
-
-                var token = new JwtSecurityToken(jwtEncodedString: authHeader);
-
+                var token = new JwtSecurityToken(authHeader);
                 var identity = new ClaimsIdentity(token.Claims, "basic");
                 HttpContext.User = new ClaimsPrincipal(identity);
             }
