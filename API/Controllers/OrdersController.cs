@@ -20,7 +20,6 @@ namespace API.Controllers
         }
 
         [HttpGet("GetList")]
-        [AllowAnonymous]
         public IEnumerable<Order> GetList()
         {
             IEnumerable<Order> test = _ordersData.GetOrders();
@@ -28,7 +27,6 @@ namespace API.Controllers
         }
 
         [HttpPut("Add")]
-        [AllowAnonymous]
         public bool AddOrder(Order order)
         {
             _ordersData.AddOrder(order);
