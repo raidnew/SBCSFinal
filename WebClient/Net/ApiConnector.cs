@@ -32,7 +32,7 @@ namespace WebClient.Net
             return jwt;
         }
 
-        public async Task<HttpResponseMessage> RequestAsync(string addr, string content = null, HttpMethod method = null)
+        public async Task<string> RequestAsync(string addr, string content = null, HttpMethod method = null)
         {
             if (method is null) 
                 method = HttpMethod.Get;
@@ -46,8 +46,9 @@ namespace WebClient.Net
 
             HttpResponseMessage response = await Http.SendAsync(request);
             //HttpResponseMessage response = await Http.SendAsync(request).Result;
-            //T ret = (T)await response.Content.ReadAsStreamAsync;
-            return response;
+            //string ret = response.Result;
+
+            return await response.Content.ReadAsStringAsync();
         }
 
         private string GetUrl(string action)

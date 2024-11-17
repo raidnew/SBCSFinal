@@ -23,7 +23,8 @@ namespace API.Controllers
         [AllowAnonymous]
         public IEnumerable<Order> GetList()
         {
-            return _ordersData.GetOrders();
+            IEnumerable<Order> test = _ordersData.GetOrders();
+            return test;
         }
 
         [HttpPut("Add")]
