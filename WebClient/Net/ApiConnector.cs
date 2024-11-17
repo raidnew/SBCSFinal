@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json;
+using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -11,12 +13,12 @@ using WebClient.Auth;
 
 namespace WebClient.Net
 {
-    public class ApiConnector : Controller
+    public class ApiConnector
     {
         private readonly string _serverAddress;
         private HttpClient Http { get; set; }
-
-        public ApiConnector()
+        private static HttpContext _httpContext => new HttpContextAccessor().HttpContext;
+        public ApiConnector(HttpContext httpContext)
         {
             _serverAddress = "http://localhost:5555";
             Http = new HttpClient();
@@ -33,14 +35,36 @@ namespace WebClient.Net
             return jwt;
         }
 
-        public async Task<string> RequestAsync(string addr)
+        public async Task<string> RequestAsync(string addr, string content = null, HttpMethod method = null)
         {
-            string jwt = HttpContext.Session.GetString("token");
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, GetUrl(addr));
-            request.Headers.Authorization = new AuthenticationHeaderValue(jwt);
-            HttpResponseMessage response = await Http.SendAsync(request);
-            string data = await response.Content.ReadAsStringAsync();
-            return data;
+            if (method is null)
+                method = HttpMethod.Get;
+
+            HttpRequestMessage request = new HttpRequestMessage(method, GetUrl(addr));
+
+            HttpContext context = _httpContext;
+
+            string jwt = context.Session.GetString("token");
+            if (!(jwt is null))
+            {
+                request.Headers.Authorization = new AuthenticationHeaderValue(jwt);
+            }
+            if(content != null)
+            {
+                //request.Headers.Add("Content-Type", "application/json");
+                request.Content = new StringContent(content, Encoding.UTF8, "application/json");
+            }
+            try
+            {
+                HttpResponseMessage response = await Http.SendAsync(request);
+                string data = await response.Content.ReadAsStringAsync();
+                return data;
+            }
+            catch(Exception e)
+            {
+                return "sadf";
+            }
+            return "sadf111";
         }
 
         private string GetUrl(string action)

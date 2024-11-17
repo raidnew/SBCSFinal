@@ -31,6 +31,7 @@ namespace WebClient
             services.AddControllersWithViews();
 
             services.AddMvc();
+            services.AddHttpContextAccessor();
 
             services.Configure<IdentityOptions>(options =>
             {

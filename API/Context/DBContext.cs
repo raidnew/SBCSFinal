@@ -6,6 +6,7 @@ namespace API.Context
 {
     public class DBContext : IdentityDbContext<AppUser>
     {
+        public DbSet<Order> Orders { get; set; }
         public DBContext(DbContextOptions<DBContext> options) : base(options) { }
     }
 }

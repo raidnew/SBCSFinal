@@ -40,11 +40,7 @@ namespace API.Controllers
             {
                 claimsList.Add(new Claim(ClaimTypes.Name, authRequest.Name));
                 claimsList.Add(new Claim(ClaimTypes.Authentication, authRequest.Name));
-                //claimsList.Add(new Claim(ClaimTypes.Authentication, authRequest.Name));
-
                 /*
-                _userManager.GetUserAsync
-
                 foreach (var role in user.Roles)
                     claimsList.Add(new Claim(ClaimTypes.Role, role));
                 */
@@ -52,8 +48,7 @@ namespace API.Controllers
             else
             {
                 claimsList.Add(new Claim(ClaimTypes.Name, authRequest.Name));
-                //claimsList.Add(new Claim(ClaimTypes.Authentication, ));
-                //claimsList.Add(new Claim(ClaimTypes.Anonymous, authRequest.Name));
+                claimsList.Add(new Claim(ClaimTypes.Anonymous, authRequest.Name));
             }
 
             Claim[] claims = claimsList.ToArray();

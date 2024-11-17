@@ -22,7 +22,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace WebClient.Controllers
 {
-    public class AccountController : AuthController
+    public class AccountController : BaseMyController
     {
         [HttpGet]
         public IActionResult Login(string returnUrl)
@@ -42,7 +42,7 @@ namespace WebClient.Controllers
                 request.Name = authData.UserName;
                 request.Password = authData.Password;
 
-                ApiConnector apiConnector = new ApiConnector();
+                ApiConnector apiConnector = new ApiConnector(HttpContext);
                 string jwt = await apiConnector.AuthRequest(request);
                 HttpContext.Session.SetString("token", jwt);
                 AuthUserByJwt(jwt);

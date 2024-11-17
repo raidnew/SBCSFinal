@@ -1,32 +1,32 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Net.Http.Headers;
-using Newtonsoft.Json;
-using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Net;
-using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Security.Claims;
-using System.Text;
+using System.Net.Http;
 using System.Threading.Tasks;
+using static System.Net.WebRequestMethods;
 
 namespace WebClient.Controllers
 {
-    public class TestController : AuthController
+    public class TestController : BaseMyController
     {
-
+        private readonly string _serverAddress;
+        private HttpClient Http { get; set; }
 
         public TestController()
         {
-
-
+            _serverAddress = "http://localhost:5555";
+            Http = new HttpClient();
         }
 
         public async Task<IActionResult> Demo()
         {
-           
+            string jwt = HttpContext.Session.GetString("token");
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, GetUrl("Test/Data"));
+            request.Headers.Authorization = new AuthenticationHeaderValue(jwt);
+
+            HttpResponseMessage response = await Http.SendAsync(request);
+            string data = await response.Content.ReadAsStringAsync();
+
             return View();
         }
 
@@ -37,5 +37,9 @@ namespace WebClient.Controllers
         }
         */
 
+        private string GetUrl(string action)
+        {
+            return $"{_serverAddress}/api/{action}";
+        }
     }
 }

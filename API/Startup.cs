@@ -13,6 +13,8 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using API.Models;
 using Microsoft.AspNetCore.Identity;
+using API.Interfaces;
+using API.Data;
 
 namespace API
 {
@@ -32,6 +34,7 @@ namespace API
             ConfigureJWT(services);
 
             services.AddControllers();
+            services.AddScoped<IOrdersEntries, OrdersEntries>();
 
             services.AddIdentity<AppUser, IdentityRole>()
                 .AddEntityFrameworkStores<DBContext>()

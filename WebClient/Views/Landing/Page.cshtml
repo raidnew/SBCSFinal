@@ -1,0 +1,20 @@
+﻿@model API.Models.Order
+@{
+    ViewData["Title"] = "registration";
+    Layout = "_Layout";
+}
+
+<form asp-controller="Landing" asp-action="AddOrder" method="post">
+    <div>
+        <input asp-for="Name" />
+    </div>
+    <div>
+        <input asp-for="Email" />
+    </div>
+    <div>
+        <input asp-for="Message" />
+    </div>
+    <div>
+        <button type="submit">Зарегистрироваться</button>
+    </div>
+</form>
