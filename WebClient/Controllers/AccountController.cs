@@ -46,13 +46,8 @@ namespace WebClient.Controllers
                 string jwt = await apiConnector.AuthRequest(request);
                 HttpContext.Session.SetString("token", jwt);
                 AuthUserByJwt(jwt);
-
-                return View(authData);
             }
-            else
-            {
-                return View(authData);
-            }
+            return View(authData);
         }
 
         public IActionResult LoginInfo()

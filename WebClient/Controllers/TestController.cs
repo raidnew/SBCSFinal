@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Net.Http.Headers;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using static System.Net.WebRequestMethods;
 
 namespace WebClient.Controllers
 {
@@ -17,6 +17,21 @@ namespace WebClient.Controllers
             _serverAddress = "http://localhost:5555";
             Http = new HttpClient();
         }
+
+        //[AllowAnonymous]
+        public string Demo2()
+        {
+            
+            return "Demo2";
+        }
+
+        //[Authorize(Policy = "user")]
+        //[Authorize(Policy = "customauth")]
+        public string Demo1()
+        {
+            return "Demo1";
+        }
+
 
         public async Task<IActionResult> Demo()
         {

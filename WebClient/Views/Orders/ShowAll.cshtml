@@ -1,0 +1,25 @@
+﻿@using API.Models
+
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="table">
+        <div class="row">
+            <div class="cell">ID</div>
+            <div class="cell">Имя</div>
+            <div class="cell">EMail</div>
+            <div class="cell">Сообщение</div>
+            <div class="cell"></div>
+        </div>
+        @foreach (Order order in ViewBag.orders)
+        {
+            <div class="row">
+                <div class="cell">@order.Id</div>
+                <div class="cell">@order.Name</div>
+                <div class="cell">@order.Message</div>
+                <div class="cell">@order.StatusId</div>
+                <div class="cell"><a href="/PhoneBook/ContactInfo/@order.Id">Показать</a></div>
+            </div>
+        }
+
+    </div>
+}

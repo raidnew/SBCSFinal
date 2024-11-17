@@ -7,15 +7,8 @@ using WebClient.Net;
 
 namespace WebClient.Controllers
 {
-    public class LandingController : Controller
+    public class LandingController : BaseMyController
     {
-        ApiConnector _apiConnector;
-
-        public LandingController()
-        {
-            _apiConnector = new ApiConnector(HttpContext);
-        }
-
         [HttpGet]
         [Route("page/{page}")]
         public IActionResult Page()
@@ -27,7 +20,7 @@ namespace WebClient.Controllers
         [HttpPost]
         public IActionResult AddOrder(Order order)
         {
-            _apiConnector.RequestAsync("orders/Add", JsonConvert.SerializeObject(order), HttpMethod.Put);
+            ApiConnector.RequestAsync("orders/Add", JsonConvert.SerializeObject(order), HttpMethod.Put);
             return View();
         }
     }

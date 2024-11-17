@@ -69,3 +69,23 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+
+div.table {
+    display: table;
+    width: auto;
+    background-color: #eee;
+    border: 1px solid #666666;
+}
+
+
+div.row {
+    display: table-row;
+    width: auto;
+    height: 30px;
+}
+
+div.cell {
+    display: table-cell;
+    width: 200px;
+    background-color: #ccc;
+}

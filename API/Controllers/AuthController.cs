@@ -34,12 +34,18 @@ namespace API.Controllers
                 false,
                 false);
 
-            List<Claim> claimsList = new List<Claim>();
+            List<Claim> claimsList;
 
             if (result.Succeeded)
             {
+                AppUser user = await _userManager.FindByNameAsync(authRequest.Name);
+                claimsList = (List<Claim>)_userManager.GetClaimsAsync(user).Result;
+                
                 claimsList.Add(new Claim(ClaimTypes.Name, authRequest.Name));
                 claimsList.Add(new Claim(ClaimTypes.Authentication, authRequest.Name));
+                claimsList.Add(new Claim(ClaimTypes.Role, authRequest.Name));
+                
+                //new Claim(ClaimTypes.Role, "User"),
                 /*
                 foreach (var role in user.Roles)
                     claimsList.Add(new Claim(ClaimTypes.Role, role));
@@ -47,8 +53,9 @@ namespace API.Controllers
             }
             else
             {
+                claimsList = new List<Claim>();
                 claimsList.Add(new Claim(ClaimTypes.Name, authRequest.Name));
-                claimsList.Add(new Claim(ClaimTypes.Anonymous, authRequest.Name));
+                //claimsList.Add(new Claim(ClaimTypes.Anonymous, authRequest.Name));
             }
 
             Claim[] claims = claimsList.ToArray();

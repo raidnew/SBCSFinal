@@ -1,16 +1,28 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace WebClient.Controllers
 {
+    [AllowAnonymous]
     public class HomeController : BaseMyController
     {
         public IActionResult Index()
         {
             return View();
         }
-        public IActionResult Test()
+
+        [HttpGet]
+        [Route("Test")]
+        public string Test()
         {
-            return View();
+            return "Test";
+        }
+
+        [HttpGet]
+        [Route("Test2")]
+        public string Test2()
+        {
+            return "Test2";
         }
     }
 }

@@ -1,12 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json;
-using System;
-using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Runtime.CompilerServices;
+using System.Net.Mime;
 using System.Text;
 using System.Threading.Tasks;
 using WebClient.Auth;
@@ -35,36 +32,22 @@ namespace WebClient.Net
             return jwt;
         }
 
-        public async Task<string> RequestAsync(string addr, string content = null, HttpMethod method = null)
+        public async Task<HttpResponseMessage> RequestAsync(string addr, string content = null, HttpMethod method = null)
         {
-            if (method is null)
+            if (method is null) 
                 method = HttpMethod.Get;
-
             HttpRequestMessage request = new HttpRequestMessage(method, GetUrl(addr));
-
-            HttpContext context = _httpContext;
-
-            string jwt = context.Session.GetString("token");
+            string jwt = _httpContext.Session.GetString("token");
             if (!(jwt is null))
-            {
                 request.Headers.Authorization = new AuthenticationHeaderValue(jwt);
-            }
-            if(content != null)
-            {
-                //request.Headers.Add("Content-Type", "application/json");
+
+            if (content != null)
                 request.Content = new StringContent(content, Encoding.UTF8, "application/json");
-            }
-            try
-            {
-                HttpResponseMessage response = await Http.SendAsync(request);
-                string data = await response.Content.ReadAsStringAsync();
-                return data;
-            }
-            catch(Exception e)
-            {
-                return "sadf";
-            }
-            return "sadf111";
+
+            HttpResponseMessage response = await Http.SendAsync(request);
+            //HttpResponseMessage response = await Http.SendAsync(request).Result;
+            //T ret = (T)await response.Content.ReadAsStreamAsync;
+            return response;
         }
 
         private string GetUrl(string action)

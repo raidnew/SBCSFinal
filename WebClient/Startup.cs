@@ -1,18 +1,14 @@
+using API.Auth;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using static System.Net.WebRequestMethods;
-using System.Net.Http.Headers;
-using System.Net.Http;
-using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
-using Microsoft.AspNet.Identity;
-using WebClient.Models;
+using WebClient.Auth;
 
 namespace WebClient
 {
@@ -33,6 +29,32 @@ namespace WebClient
             services.AddMvc();
             services.AddHttpContextAccessor();
 
+            const string signingSecurityKey = "111111111111111111111111111111111111111111111111";
+            var signingKey = new SigningSymmetricKey(signingSecurityKey);
+            services.AddSingleton<IJwtSigningEncodingKey>(signingKey);
+            const string jwtSchemeName = "JwtBearer";
+
+            var signingDecodingKey = (IJwtSigningDecodingKey)signingKey;
+
+            /*
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("customauth", policy => policy.RequireClaim(ClaimTypes.Authentication));
+            });
+            */
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
+                        ValidateLifetime = false,
+                        IssuerSigningKey = signingDecodingKey.GetKey(),
+                        ValidateIssuerSigningKey = false,
+                    };
+                });
+
             services.Configure<IdentityOptions>(options =>
             {
                 options.Password.RequiredLength = 1;
@@ -52,15 +74,12 @@ namespace WebClient
             {
                 app.UseDeveloperExceptionPage();
             }
-            /*
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-            }
-            */
+
             app.UseStaticFiles();
             app.UseRouting();
             app.UseSession();
+            app.UseAuthorization();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
