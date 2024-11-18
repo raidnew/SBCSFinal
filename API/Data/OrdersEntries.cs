@@ -34,7 +34,7 @@ namespace API.Data
 
         public Order GetOrderById(int id)
         {
-            return _dbContext.Orders.First<Order>(o => o.Id == id);
+            return _dbContext.Orders.FirstOrDefault<Order>(o => o.Id == id);
         }
 
         public IEnumerable<Order> GetOrders()

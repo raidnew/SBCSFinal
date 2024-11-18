@@ -2,24 +2,29 @@
 
 @if (User.Identity.IsAuthenticated)
 {
-    <div class="table">
-        <div class="row">
-            <div class="cell">ID</div>
-            <div class="cell">Имя</div>
-            <div class="cell">EMail</div>
-            <div class="cell">Сообщение</div>
-            <div class="cell"></div>
-        </div>
+    <table class="table">
+        <thead>
+            <tr class="row">
+                <th class="cell">ID</th>
+                <th class="cell">Имя</th>
+                <th class="cell">EMail</th>
+                <th class="cell">Сообщение</th>
+                <th class="cell">Состояние</th>
+                <th class="cell"></th>
+            </tr>
+        </thead>
+        <tbody>
         @foreach (Order order in ViewBag.orders)
         {
-            <div class="row">
-                <div class="cell">@order.Id</div>
-                <div class="cell">@order.Name</div>
-                <div class="cell">@order.Message</div>
-                <div class="cell">@order.StatusId</div>
-                <div class="cell"><a href="/Order/Edit/@order.Id">Редактировать</a></div>
-            </div>
+            <tr class="row">
+                <th class="cell">@order.Id</th>
+                <th class="cell">@order.Name</th>
+                <th class="cell">@order.Email</th>
+                <th class="cell">@order.Message</th>
+                <th class="cell">@order.StatusId</th>
+                <th class="cell"><a href="/Orders/Edit/@order.Id">Редактировать</a></th>
+            </tr>
         }
-
-    </div>
+        </tbody>
+    </table>
 }

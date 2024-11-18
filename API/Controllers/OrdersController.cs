@@ -26,6 +26,13 @@ namespace API.Controllers
             return test;
         }
 
+        [HttpGet("GetOrder/{id}")]
+        public Order GetOrder(int id)
+        {
+            Order ret = _ordersData.GetOrderById(id);
+            return ret;
+        }
+
         [HttpPut("Add")]
         public bool AddOrder(Order order)
         {

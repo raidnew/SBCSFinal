@@ -1,0 +1,26 @@
+﻿@using API.Models
+@if (User.Identity.IsAuthenticated)
+{
+    <table class="table">
+        <tr>
+            <th>ID</th>
+            <th>@ViewBag.order.Id</th>
+        </tr>
+        <tr>
+            <th>Name</th>
+            <th>@ViewBag.order.Name</th>
+        </tr>
+        <tr>
+            <th>EMail</th>
+            <th>@ViewBag.order.Email</th>
+        </tr>
+        <tr>
+            <th>Message</th>
+            <th>@ViewBag.order.Message</th>
+        </tr>
+        <tr>
+            <th>Status</th>
+            <th>@ViewBag.order.StatusId</th>
+        </tr>
+    </table>
+}
