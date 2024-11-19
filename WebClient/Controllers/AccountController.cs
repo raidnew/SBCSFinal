@@ -44,7 +44,6 @@ namespace WebClient.Controllers
 
                 ApiConnector apiConnector = new ApiConnector(HttpContext);
                 string jwt = await apiConnector.AuthRequest(request);
-                HttpContext.Session.SetString("token", jwt);
                 AuthUserByJwt(jwt);
             }
             return View(authData);

@@ -1,8 +1,9 @@
 ﻿using API.Interfaces;
+using API.Models;
 
 namespace API.Data
 {
-    public class ProjectEntries : IProjectEntries
+    public class ProjectEntries : IProjectEntries<ProjectEntry>
     {
     }
 }

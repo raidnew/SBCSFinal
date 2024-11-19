@@ -15,6 +15,7 @@ using API.Models;
 using Microsoft.AspNetCore.Identity;
 using API.Interfaces;
 using API.Data;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace API
 {
@@ -37,8 +38,8 @@ namespace API
             services.AddScoped<IOrdersEntries, OrdersEntries>();
 
             services.AddIdentity<AppUser, IdentityRole>()
-                .AddEntityFrameworkStores<DBContext>()
-                .AddDefaultTokenProviders();
+                .AddEntityFrameworkStores<DBContext>();
+                //.AddDefaultTokenProviders();
 
             services.Configure<IdentityOptions>(options =>
             {
@@ -56,22 +57,21 @@ namespace API
             const string signingSecurityKey = "111111111111111111111111111111111111111111111111";
             var signingKey = new SigningSymmetricKey(signingSecurityKey);
             services.AddSingleton<IJwtSigningEncodingKey>(signingKey);
-            const string jwtSchemeName = "JwtBearer";
+            const string jwtSchemeName = "TestScheme";
 
             var signingDecodingKey = (IJwtSigningDecodingKey)signingKey;
             services
-                .AddAuthentication(options =>
-                {
-                    options.DefaultAuthenticateScheme = jwtSchemeName;
-                    options.DefaultChallengeScheme = jwtSchemeName;
-                })
+                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(jwtSchemeName, jwtBearerOptions => {
                     jwtBearerOptions.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = signingDecodingKey.GetKey(),
-                        ValidateAudience = false,
-                        ValidateIssuer = false,
+                        ValidateAudience = true,
+                        ValidAudience = "testa",
+                        ValidateIssuer = true,
+                        ValidIssuer = "testi",
+                        ValidateLifetime = true
                     };
                 });
         }

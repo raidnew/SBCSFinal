@@ -43,8 +43,9 @@ namespace API.Controllers
                 
                 claimsList.Add(new Claim(ClaimTypes.Name, authRequest.Name));
                 claimsList.Add(new Claim(ClaimTypes.Authentication, authRequest.Name));
-                claimsList.Add(new Claim(ClaimTypes.Role, authRequest.Name));
-                
+                claimsList.Add(new Claim(ClaimTypes.NameIdentifier, authRequest.Name));
+                //claimsList.Add(new Claim(ClaimTypes.Role, authRequest.Name));
+
                 //new Claim(ClaimTypes.Role, "User"),
                 /*
                 foreach (var role in user.Roles)
@@ -61,10 +62,10 @@ namespace API.Controllers
             Claim[] claims = claimsList.ToArray();
 
             var token = new JwtSecurityToken(
-                issuer: "DemoApp",
-                audience: "DemoAppClient",
+                issuer: "testi",
+                audience: "testa",
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(5),
+                expires: DateTime.Now.AddMinutes(20),
                 signingCredentials: new SigningCredentials(
                         signingEncodingKey.GetKey(),
                         signingEncodingKey.SigningAlgorithm)

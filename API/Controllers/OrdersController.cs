@@ -27,6 +27,7 @@ namespace API.Controllers
         }
 
         [HttpGet("GetOrder/{id}")]
+        [Authorize]
         public Order GetOrder(int id)
         {
             Order ret = _ordersData.GetOrderById(id);
@@ -34,6 +35,7 @@ namespace API.Controllers
         }
 
         [HttpPut("Add")]
+        [Authorize]
         public bool AddOrder(Order order)
         {
             _ordersData.AddOrder(order);
