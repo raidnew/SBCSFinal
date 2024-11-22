@@ -1,4 +1,5 @@
 using API.Auth;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -9,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using WebClient.Auth;
+using WebClient.Models;
 
 namespace WebClient
 {
@@ -37,11 +39,35 @@ namespace WebClient
             var signingDecodingKey = (IJwtSigningDecodingKey)signingKey;
 
             /*
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            }).AddCookie();
+            */
+            /*
+            var builder = services.AddIdentityCore<AppUser>();
+            var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);
+            identityBuilder.AddSignInManager<SignInManager<AppUser>>();
+            */
+            /*
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("customauth", policy => policy.RequireClaim(ClaimTypes.Authentication));
             });
             */
+            services.AddAuthentication(MyAuthenticationOptions.DefaultScheme)
+                .AddScheme<MyAuthenticationOptions, MyAuthenticationHandler> 
+                    (
+                    MyAuthenticationOptions.DefaultScheme,
+                    options => {
+                        //options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                    }
+                    ).AddCookie();
+
+            services.AddAuthorization();
+
+            /*
             services.AddAuthentication(options =>
                 {
                     options.DefaultAuthenticateScheme = jwtSchemeName;
@@ -61,7 +87,8 @@ namespace WebClient
                         ValidateIssuerSigningKey = false,
                     };
                 });
-
+            */
+            /*
             services.Configure<IdentityOptions>(options =>
             {
                 options.Password.RequiredLength = 1;
@@ -71,7 +98,7 @@ namespace WebClient
                 options.Password.RequireLowercase = false;
                 options.Lockout.AllowedForNewUsers = true;
             });
-
+            */
             services.AddSession();
         }
 
@@ -83,9 +110,11 @@ namespace WebClient
             }
 
             app.UseStaticFiles();
-            app.UseRouting();
             app.UseSession();
-            app.UseAuthorization();
+            app.UseAuthentication(); ;
+
+            app.UseRouting();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

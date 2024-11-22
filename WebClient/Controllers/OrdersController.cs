@@ -25,20 +25,11 @@ namespace WebClient.Controllers
         }
 
         [HttpGet]
-        //[Authorize]
+        [Authorize]
         [Route("Edit/{id}")]
         public IActionResult Edit(int id)
         {
             ViewBag.order = JsonConvert.DeserializeObject<Order>(ApiConnector.RequestAsync($"orders/GetOrder/{id}").Result);
-            return View();
-        }
-
-        [HttpGet]
-        [Authorize]
-        [Route("Edit")]
-        public IActionResult Edit()
-        {
-            ViewBag.order = JsonConvert.DeserializeObject<Order>(ApiConnector.RequestAsync($"orders/GetOrder/1").Result);
             return View();
         }
 
