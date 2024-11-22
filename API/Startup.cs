@@ -35,11 +35,10 @@ namespace API
             ConfigureJWT(services);
 
             services.AddControllers();
-            services.AddScoped<IOrdersEntries, OrdersEntries>();
+            services.AddScoped<IEntriesStorage<Order>, OrdersEntries>();
 
             services.AddIdentity<AppUser, IdentityRole>()
                 .AddEntityFrameworkStores<DBContext>();
-                //.AddDefaultTokenProviders();
 
             services.Configure<IdentityOptions>(options =>
             {

@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using API.Interfaces;
+using System.ComponentModel.DataAnnotations;
 
 namespace API.Models
 {
-    public class Order
+    public class Order : IDbEntity
     {
         public int Id { get; set; }
 

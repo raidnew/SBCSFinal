@@ -12,9 +12,9 @@ namespace API.Controllers
     [ApiController]
     public class OrdersController : ControllerBase
     {
-        private readonly IOrdersEntries _ordersData;
+        private readonly IEntriesStorage<Order> _ordersData;
 
-        public OrdersController(IOrdersEntries orders)
+        public OrdersController(IEntriesStorage<Order> orders)
         {
             _ordersData = orders;
         }
@@ -22,7 +22,7 @@ namespace API.Controllers
         [HttpGet("GetList")]
         public IEnumerable<Order> GetList()
         {
-            IEnumerable<Order> test = _ordersData.GetOrders();
+            IEnumerable<Order> test = _ordersData.GetAll();
             return test;
         }
 
@@ -30,7 +30,7 @@ namespace API.Controllers
         [Authorize]
         public Order GetOrder(int id)
         {
-            Order ret = _ordersData.GetOrderById(id);
+            Order ret = _ordersData.GetById(id);
             return ret;
         }
 
@@ -38,7 +38,7 @@ namespace API.Controllers
         [Authorize]
         public bool AddOrder(Order order)
         {
-            _ordersData.AddOrder(order);
+            _ordersData.Add(order);
             return true;
         }
     }

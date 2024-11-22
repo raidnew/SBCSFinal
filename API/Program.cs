@@ -18,10 +18,10 @@ namespace API
             using (IServiceScope scope = host.Services.CreateScope())
             {
                 IServiceProvider provider = scope.ServiceProvider;
-                DBContext phoneBookDBContext = provider.GetRequiredService<DBContext>();
+                DBContext dBContext = provider.GetRequiredService<DBContext>();
                 UserManager<AppUser> userManager = provider.GetRequiredService<UserManager<AppUser>>();
                 RoleManager<IdentityRole> roleManager = provider.GetRequiredService<RoleManager<IdentityRole>>();
-                CreateDB.TryInit(phoneBookDBContext, userManager, roleManager, true);
+                CreateDB.TryInitAsync(dBContext, userManager, roleManager, true);
             }
 
             host.Run();

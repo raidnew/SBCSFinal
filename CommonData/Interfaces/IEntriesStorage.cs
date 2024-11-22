@@ -7,8 +7,8 @@ namespace API.Interfaces
     {
         public IEnumerable<T> GetAll();
         public T GetById(int id);
-        public void EditObj(T obj);
-        public void AddOrder(T obj);
+        public void Edit(T obj);
+        public void Add(T obj);
         public void Remove(int id);
     }
 }

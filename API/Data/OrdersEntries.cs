@@ -7,24 +7,18 @@ using System.Linq;
 
 namespace API.Data
 {
-    public class OrdersEntries : IOrdersEntries
+    public class OrdersEntries : Entries<Order>
     {
         private DBContext _dbContext;
 
-        public OrdersEntries(DBContext dBContext)
+        public OrdersEntries(DBContext dBContext) : base(dBContext, dBContext.Orders)
         {
             _dbContext = dBContext;
         }
 
-        public void AddOrder(Order order)
+        public override void Edit(Order order)
         {
-            _dbContext.Orders.Add(order);
-            _dbContext.SaveChanges();
-        }
-
-        public void EditOrder(Order order)
-        {
-            Order editingOrder = GetOrderById(order.Id);
+            Order editingOrder = GetById(order.Id);
             editingOrder.Name = order.Name;
             editingOrder.Email = order.Email;
             editingOrder.Message = order.Message;
@@ -32,20 +26,5 @@ namespace API.Data
             _dbContext.SaveChanges();
         }
 
-        public Order GetOrderById(int id)
-        {
-            return _dbContext.Orders.FirstOrDefault<Order>(o => o.Id == id);
-        }
-
-        public IEnumerable<Order> GetOrders()
-        {
-            return _dbContext.Orders;
-        }
-
-        public void RemoveOrder(int id)
-        {
-            _dbContext.Orders.Remove(GetOrderById(id));
-            _dbContext.SaveChanges();
-        }
     }
 }
