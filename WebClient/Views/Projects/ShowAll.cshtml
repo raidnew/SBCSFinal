@@ -1,6 +1,12 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@using API.Models
+
 Projects
+
+@foreach (ProjectEntry project in ViewBag.projects)
+{
+    <div>
+        @project.Id
+        <a>@project.Name</a>
+        <p>@project.Description</p>
+    </div>
+}

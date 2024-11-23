@@ -9,6 +9,7 @@ namespace WebClient.Controllers
     [Route("[controller]")]
     public class BlogsController : BaseMyController
     {
+        [Route("ShowAll")]
         public IActionResult ShowAll()
         {
             ViewBag.blogs = JsonConvert.DeserializeObject<IEnumerable<BlogEntry>>(ApiConnector.RequestAsync("blogs/getList").Result);

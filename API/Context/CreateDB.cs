@@ -1,5 +1,6 @@
 ﻿using API.Context;
 using API.Models;
+using CommonData.Models;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Diagnostics;
@@ -29,6 +30,8 @@ namespace CSWork21.Data
                     CreateBlogs(dbcontext);
                     CreateContacts(dbcontext);
                     CreateServices(dbcontext);
+                    CreateMenu(dbcontext);
+                    CreateHeaderTexts(dbcontext);
 
                     dbcontext.SaveChanges();
                 }
@@ -94,11 +97,28 @@ namespace CSWork21.Data
 
         private static void CreateServices(DBContext dbcontext)
         {
-            dbcontext.Services.Add(new ServiceEntry() { Name = "Service1", Description = "We can do service1"});
-            dbcontext.Services.Add(new ServiceEntry() { Name = "Service2", Description = "We can do service2"});
-            dbcontext.Services.Add(new ServiceEntry() { Name = "Service3", Description = "We can do service3"});
-            dbcontext.Services.Add(new ServiceEntry() { Name = "Service4", Description = "We can do service4"});
-            dbcontext.Services.Add(new ServiceEntry() { Name = "Service5", Description = "We can do service5"});
+            dbcontext.Services.Add(new ServiceEntry() { Name = "Service1", Description = "We can do service1" });
+            dbcontext.Services.Add(new ServiceEntry() { Name = "Service2", Description = "We can do service2" });
+            dbcontext.Services.Add(new ServiceEntry() { Name = "Service3", Description = "We can do service3" });
+            dbcontext.Services.Add(new ServiceEntry() { Name = "Service4", Description = "We can do service4" });
+            dbcontext.Services.Add(new ServiceEntry() { Name = "Service5", Description = "We can do service5" });
+        }
+
+        private static void CreateMenu(DBContext dbcontext)
+        {
+            dbcontext.Menu.Add(new MenuItem() { Text="MaiN", Link="Home/Index" });
+            dbcontext.Menu.Add(new MenuItem() { Text="ProjectS", Link= "Projects/ShowAll" });
+            dbcontext.Menu.Add(new MenuItem() { Text="ServiceS", Link= "Services/ShowAll" });
+            dbcontext.Menu.Add(new MenuItem() { Text="BlogS", Link= "Blogs/ShowAll" });
+            dbcontext.Menu.Add(new MenuItem() { Text="ContactS", Link= "Contacts/ShowAll" });
+        }
+
+        private static void CreateHeaderTexts(DBContext dbcontext)
+        {
+            dbcontext.HeaderTexts.Add(new HeaderText() { Text= "Если что-нибудь" });
+            dbcontext.HeaderTexts.Add(new HeaderText() { Text= "может пойти" });
+            dbcontext.HeaderTexts.Add(new HeaderText() { Text= "не так, оно" });
+            dbcontext.HeaderTexts.Add(new HeaderText() { Text= "пойдёт не так" });
         }
 
         private async static Task<bool> CreateUser(UserManager<AppUser> userManager, string login, string password, string role)

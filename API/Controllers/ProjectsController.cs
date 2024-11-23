@@ -8,11 +8,11 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProjectController : ControllerBase
+    public class ProjectsController : ControllerBase
     {
         private readonly IEntriesStorage<ProjectEntry> _data;
 
-        public ProjectController(IEntriesStorage<ProjectEntry> storage)
+        public ProjectsController(IEntriesStorage<ProjectEntry> storage)
         {
             _data = storage;
         }
@@ -24,8 +24,7 @@ namespace API.Controllers
             return test;
         }
 
-        [HttpGet("GetOrder/{id}")]
-        [Authorize]
+        [HttpGet("Get/{id}")]
         public ProjectEntry GetOrder(int id)
         {
             ProjectEntry ret = _data.GetById(id);

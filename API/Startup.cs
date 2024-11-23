@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Identity;
 using API.Interfaces;
 using API.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using CommonData.Models;
 
 namespace API
 {
@@ -40,6 +41,8 @@ namespace API
             services.AddScoped<IEntriesStorage<ServiceEntry>, ServicesEntries>();
             services.AddScoped<IEntriesStorage<ContactEntry>, ContactsEntries>();
             services.AddScoped<IEntriesStorage<BlogEntry>, BlogsEntries>();
+            services.AddScoped<IEntriesStorage<MenuItem>, MenuItems>();
+            services.AddScoped<IEntriesStorage<HeaderText>, HeaderTexts>();
 
             services.AddIdentity<AppUser, IdentityRole>()
                 .AddEntityFrameworkStores<DBContext>();
