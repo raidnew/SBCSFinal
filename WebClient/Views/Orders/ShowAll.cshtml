@@ -1,5 +1,13 @@
 ﻿@using API.Models
 
+@{
+    string StatusName(int statusId)
+    {
+        return (ViewBag.statuses as IEnumerable<OrdersStatus>).FirstOrDefault<OrdersStatus>(status => status.Id == statusId).Name;
+    }
+}
+
+
 <table class="table">
     <thead>
         <tr class="row">
@@ -19,7 +27,7 @@
             <th class="cell">@order.Name</th>
             <th class="cell">@order.Email</th>
             <th class="cell">@order.Message</th>
-            <th class="cell">@order.StatusId</th>
+                <th class="cell">@StatusName(order.StatusId) ( @order.StatusId )</th>
             <th class="cell"><a href="/Orders/Edit/@order.Id">Редактировать</a></th>
         </tr>
     }

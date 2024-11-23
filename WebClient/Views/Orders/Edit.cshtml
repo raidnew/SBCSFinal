@@ -20,7 +20,28 @@
         </tr>
         <tr>
             <th>Status</th>
-            <th>@ViewBag.order.StatusId</th>
+            <th>@ViewBag.currentStatus.Name ( @ViewBag.order.StatusId )</th>
         </tr>
     </table>
+
+    <form method="post" action="/orders/Edit">
+        <input type="hidden" name="orderId" value="@ViewBag.order.Id" />
+
+        <select name="newStateId">
+            @foreach (OrdersStatus state in ViewBag.statuses)
+            {
+                @if (state.Id == ViewBag.order.StatusId)
+                {
+                    <option value="@state.Id" selected>@state.Name</option>
+                }
+                else
+                {
+                    <option value="@state.Id">@state.Name</option>
+                }
+                
+            }
+        </select>
+
+        <input type="submit" value="Отправить" />
+    </form>
 }

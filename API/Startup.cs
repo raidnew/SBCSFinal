@@ -37,6 +37,7 @@ namespace API
 
             services.AddControllers();
             services.AddScoped<IEntriesStorage<Order>, OrdersEntries>();
+            services.AddScoped<IEntriesStorage<OrdersStatus>, OrdersStatuses>();
             services.AddScoped<IEntriesStorage<ProjectEntry>, ProjectEntries>();
             services.AddScoped<IEntriesStorage<ServiceEntry>, ServicesEntries>();
             services.AddScoped<IEntriesStorage<ContactEntry>, ContactsEntries>();

@@ -43,6 +43,14 @@ namespace API.Controllers
             return ret;
         }
 
+        [HttpPost("Edit")]
+        [Authorize]
+        public bool EditOrder(Order order)
+        {
+            _ordersData.Edit(order);
+            return true;
+        }
+
         [HttpPut("Add")]
         [Authorize]
         public bool AddOrder(Order order)
