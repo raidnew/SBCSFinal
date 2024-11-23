@@ -7,15 +7,45 @@
 <div asp-validation-summary="ModelOnly"></div>
 <form asp-controller="Account" asp-action="Login" asp-antiforgery="true" method="post">
     <div>
-        <input asp-for="UserName"/>
+        <input asp-for="UserName" />
     </div>
 
     <div>
-        <input asp-for="Password"/>
+        <input asp-for="Password" />
     </div>
     <input type="hidden" asp-for="ReturnUrl" />
     <div>
         <button type="submit" value="submit">Войти</button>
+    </div>
+</form>
+
+
+<form asp-controller="Account" asp-action="Login" asp-antiforgery="true" method="post">
+    <div>
+        <input type="hidden" asp-for="UserName" value="user" />
+    </div>
+
+    <div>
+        <input type="hidden" asp-for="Password" value="1234" />
+    </div>
+    <input type="hidden" asp-for="ReturnUrl" />
+    <div>
+        <button type="submit" value="submit">Войти User</button>
+    </div>
+</form>
+
+
+<form asp-controller="Account" asp-action="Login" asp-antiforgery="true" method="post">
+    <div>
+        <input type="hidden" asp-for="UserName" value="admin"/>
+    </div>
+
+    <div>
+        <input type="hidden" asp-for="Password" value="1234"/>
+    </div>
+    <input type="hidden" asp-for="ReturnUrl" />
+    <div>
+        <button type="submit" value="submit">Войти Admin</button>
     </div>
 </form>
 
