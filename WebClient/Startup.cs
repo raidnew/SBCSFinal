@@ -31,31 +31,6 @@ namespace WebClient
             services.AddMvc();
             services.AddHttpContextAccessor();
 
-            const string signingSecurityKey = "111111111111111111111111111111111111111111111111";
-            var signingKey = new SigningSymmetricKey(signingSecurityKey);
-            services.AddSingleton<IJwtSigningEncodingKey>(signingKey);
-            const string jwtSchemeName = "TestScheme";
-
-            var signingDecodingKey = (IJwtSigningDecodingKey)signingKey;
-
-            /*
-            services.AddAuthentication(options =>
-            {
-                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            }).AddCookie();
-            */
-            /*
-            var builder = services.AddIdentityCore<AppUser>();
-            var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);
-            identityBuilder.AddSignInManager<SignInManager<AppUser>>();
-            */
-            /*
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("customauth", policy => policy.RequireClaim(ClaimTypes.Authentication));
-            });
-            */
             services.AddAuthentication(MyAuthenticationOptions.DefaultScheme)
                 .AddScheme<MyAuthenticationOptions, MyAuthenticationHandler> 
                     (
@@ -67,17 +42,6 @@ namespace WebClient
 
             services.AddAuthorization();
 
-            /*
-            services.Configure<IdentityOptions>(options =>
-            {
-                options.Password.RequiredLength = 1;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireDigit = false;
-                options.Password.RequireUppercase = false;
-                options.Password.RequireLowercase = false;
-                options.Lockout.AllowedForNewUsers = true;
-            });
-            */
             services.AddSession();
         }
 
@@ -91,11 +55,8 @@ namespace WebClient
             app.UseStaticFiles();
             app.UseSession();
             app.UseAuthentication(); ;
-
             app.UseRouting();
-
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

@@ -1,29 +1,40 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using API.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+using WebClient.Net;
 
 namespace WebClient.Controllers
 {
-    public class AdminController : Controller
+    [Authorize]
+    [Route("Admin")]
+    public class AdminController : BaseMyController
     {
-        // GET: AdminController
+        [Authorize(Roles = "admin")]
+        [Route("Index")]
         public ActionResult Index()
         {
+            ViewBag.blogs = JsonConvert.DeserializeObject<IEnumerable<BlogEntry>>(ApiConnector.RequestAsync("blogs/getList").Result);
+            ViewBag.contacts = JsonConvert.DeserializeObject<IEnumerable<ContactEntry>>(ApiConnector.RequestAsync("contacts/GetList").Result);
+            ViewBag.orders = JsonConvert.DeserializeObject<IEnumerable<Order>>(ApiConnector.RequestAsync("orders/getList").Result);
+            ViewBag.projects = JsonConvert.DeserializeObject<IEnumerable<ProjectEntry>>(ApiConnector.RequestAsync("projects/getList").Result);
+            ViewBag.services = JsonConvert.DeserializeObject<IEnumerable<ServiceEntry>>(ApiConnector.RequestAsync("services/getList").Result);
+
             return View();
         }
 
-        // GET: AdminController/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: AdminController/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: AdminController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(IFormCollection collection)
@@ -38,13 +49,11 @@ namespace WebClient.Controllers
             }
         }
 
-        // GET: AdminController/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: AdminController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -59,13 +68,11 @@ namespace WebClient.Controllers
             }
         }
 
-        // GET: AdminController/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: AdminController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)

@@ -6,23 +6,24 @@ namespace WebClient.Controllers
     [AllowAnonymous]
     public class HomeController : BaseMyController
     {
+        [HttpGet]
         public IActionResult Index()
         {
             return View();
         }
 
+        [Authorize]
         [HttpGet]
-        [Route("Test")]
-        public string Test()
+        public IActionResult Test()
         {
-            return "Test";
+            return View();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
-        [Route("Test2")]
-        public string Test2()
+        public IActionResult Test2()
         {
-            return "Test2";
+            return View();
         }
     }
 }

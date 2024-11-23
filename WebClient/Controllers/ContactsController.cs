@@ -1,19 +1,20 @@
 ﻿using API.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 
 namespace WebClient.Controllers
 {
+    [Route("[controller]")]
     public class ContactsController : BaseMyController
     {
+        [Authorize]
+        [HttpGet]
+        [Route("ShowAll")]
         public IActionResult ShowAll()
         {
-            var data = ApiConnector.RequestAsync("contacts/GetList").Result;
-
-            var test = JsonConvert.DeserializeObject<IEnumerable<ContactEntry>>(data);
-            ViewBag.contacts = test;
-
+            ViewBag.contacts = JsonConvert.DeserializeObject<IEnumerable<ContactEntry>>(ApiConnector.RequestAsync("contacts/GetList").Result);
             return View();
         }
     }
