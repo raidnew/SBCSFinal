@@ -9,12 +9,8 @@ namespace API.Data
 {
     public class OrdersEntries : Entries<Order>
     {
-        private DBContext _dbContext;
 
-        public OrdersEntries(DBContext dBContext) : base(dBContext, dBContext.Orders)
-        {
-            _dbContext = dBContext;
-        }
+        public OrdersEntries(DBContext dBContext) : base(dBContext, dBContext.Orders) {}
 
         public override void Edit(Order order)
         {
@@ -23,7 +19,7 @@ namespace API.Data
             editingOrder.Email = order.Email;
             editingOrder.Message = order.Message;
             editingOrder.StatusId = order.StatusId;
-            _dbContext.SaveChanges();
+            DBContext.SaveChanges();
         }
 
     }

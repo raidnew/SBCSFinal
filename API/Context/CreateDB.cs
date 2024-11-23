@@ -27,6 +27,7 @@ namespace CSWork21.Data
                     CreateOrders(dbcontext);
                     CreateProjects(dbcontext);
                     CreateBlogs(dbcontext);
+                    CreateContacts(dbcontext);
                     CreateServices(dbcontext);
 
                     dbcontext.SaveChanges();
@@ -71,6 +72,14 @@ namespace CSWork21.Data
             dbcontext.Projects.Add(new ProjectEntry() { Name = "Project1" });
             dbcontext.Projects.Add(new ProjectEntry() { Name = "Project2" });
             dbcontext.Projects.Add(new ProjectEntry() { Name = "Project3" });
+        }
+
+        private static void CreateContacts(DBContext dbcontext)
+        {
+            dbcontext.Contacts.Add(new ContactEntry() { Name = "Adress1", Address="Ulitsa" });
+            dbcontext.Contacts.Add(new ContactEntry() { Name = "Adress2", Address="Dom" });
+            dbcontext.Contacts.Add(new ContactEntry() { Name = "Phone", Address="22334543" });
+            dbcontext.Contacts.Add(new ContactEntry() { Name = "email", Address="addr@fdomain.zone" });
         }
 
         private static void CreateBlogs(DBContext dbcontext)

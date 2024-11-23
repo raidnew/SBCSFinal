@@ -1,1 +1,15 @@
-﻿Contact showall`
+﻿@using API.Models
+
+Contacts
+
+<table class="table">
+    <tbody>
+        @foreach (ContactEntry order in ViewBag.contacts)
+        {
+            <tr class="row">
+                <th class="cell">@order.Name</th>
+                <th class="cell">@order.Address</th>
+            </tr>
+        }
+    </tbody>
+</table>

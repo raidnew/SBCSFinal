@@ -1,13 +1,16 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using API.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace WebClient.Controllers
 {
-    public class ProjectsController : Controller
+    public class ProjectsController : BaseMyController
     {
-        [Authorize]
         public IActionResult ShowAll()
         {
+            ViewBag.projects = JsonConvert.DeserializeObject<IEnumerable<ProjectEntry>>(ApiConnector.RequestAsync("projects/getList").Result);
             return View();
         }
     }

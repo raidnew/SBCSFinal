@@ -1,6 +1,7 @@
 ﻿using API.Context;
 using API.Interfaces;
 using API.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace API.Data
             _storage = storage;
         }
 
+        [Authorize]
         public void Add(T obj)
         {
             _storage.Add(obj);
@@ -36,6 +38,7 @@ namespace API.Data
             return _storage.FirstOrDefault(o => o.Id == id);
         }
 
+        [Authorize]
         public void Remove(int id)
         {
             _storage.Remove(GetById(id));

@@ -68,27 +68,6 @@ namespace WebClient
             services.AddAuthorization();
 
             /*
-            services.AddAuthentication(options =>
-                {
-                    options.DefaultAuthenticateScheme = jwtSchemeName;
-                    options.DefaultChallengeScheme = jwtSchemeName;
-                    options.DefaultScheme = jwtSchemeName;
-                })
-                .AddJwtBearer(jwtSchemeName, options =>
-                {
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = true,
-                        ValidIssuer = "testi",
-                        ValidateAudience = true,
-                        ValidAudience = "testa",
-                        ValidateLifetime = true,
-                        IssuerSigningKey = signingDecodingKey.GetKey(),
-                        ValidateIssuerSigningKey = false,
-                    };
-                });
-            */
-            /*
             services.Configure<IdentityOptions>(options =>
             {
                 options.Password.RequiredLength = 1;

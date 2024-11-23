@@ -8,9 +8,7 @@ namespace API.Data
 {
     public class ProjectEntries : Entries<ProjectEntry>
     {
-        public ProjectEntries(DBContext dBContext) : base(dBContext, dBContext.Projects)
-        {
-        }
+        public ProjectEntries(DBContext dBContext) : base(dBContext, dBContext.Projects) {}
 
         public override void Edit(ProjectEntry obj)
         {

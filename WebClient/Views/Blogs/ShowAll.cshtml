@@ -4,3 +4,29 @@
 @{
 }
 Blogs
+
+@using API.Models
+
+<table class="table">
+    <thead>
+        <tr class="row">
+            <th class="cell">ID</th>
+            <th class="cell">Имя</th>
+            <th class="cell">EMail</th>
+            <th class="cell">Сообщение</th>
+            <th class="cell">Состояние</th>
+            <th class="cell"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (BlogEntry order in ViewBag.blogs)
+        {
+            <tr class="row">
+                <th class="cell">@order.Id</th>
+                <th class="cell">@order.Name</th>
+                <th class="cell">@order.ShortDescription</th>
+                <th class="cell"><a href="/Blogs/View/@order.Id">Подробнее</a></th>
+            </tr>
+        }
+    </tbody>
+</table>

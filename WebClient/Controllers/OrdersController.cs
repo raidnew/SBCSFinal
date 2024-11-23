@@ -15,9 +15,7 @@ namespace WebClient.Controllers
         [Route("ShowAll")]
         public IActionResult ShowAll()
         {
-            var test = JsonConvert.DeserializeObject<IEnumerable<Order>>(ApiConnector.RequestAsync("orders/getList").Result);
-            ViewBag.orders = test;
-
+            ViewBag.orders = JsonConvert.DeserializeObject<IEnumerable<Order>>(ApiConnector.RequestAsync("orders/getList").Result);
             return View();
         }
 

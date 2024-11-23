@@ -11,6 +11,7 @@ namespace API.Context
         public DbSet<ProjectEntry> Projects { get; set; }
         public DbSet<BlogEntry> Blogs { get; set; }
         public DbSet<ServiceEntry> Services { get; set; }
+        public DbSet<ContactEntry> Contacts { get; set; }
         public DbSet<OrdersStatus> OrdersStatuses { get; set; }
         public DBContext(DbContextOptions<DBContext> options) : base(options) { }
     }
