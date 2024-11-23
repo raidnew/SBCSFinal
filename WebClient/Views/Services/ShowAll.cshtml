@@ -1,1 +1,13 @@
-﻿Services
+﻿@using API.Models
+Services
+
+@foreach (ServiceEntry service in ViewBag.services)
+{
+    <div>
+        <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample_@service.Id" aria-expanded="false" aria-controls="collapseExample_@service.Id">@service.Name</a>
+    </div>
+    <div class="collapse" id="collapseExample_@service.Id">
+        @service.Description
+    </div>
+
+}
