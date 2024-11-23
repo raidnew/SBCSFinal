@@ -16,19 +16,21 @@ namespace WebClient.Controllers
             ApiConnector = new ApiConnector(HttpContext);
         }
         
+        /*
         public override void OnActionExecuting(ActionExecutingContext ctx)
         {
             var jwt = HttpContext.Session.GetString("token");
             if (jwt != null) AuthUserByJwt(jwt);
             base.OnActionExecuting(ctx);
         }
-        
+        */
+        /*
         protected void AuthUserByJwt(string jwt)
         {
             var token = new JwtSecurityToken(jwt);
             var identity = new ClaimsIdentity(token.Claims, "TestScheme");
             HttpContext.User = new ClaimsPrincipal(identity);
         }
-        
+        */
     }
 }

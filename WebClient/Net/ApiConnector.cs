@@ -27,7 +27,7 @@ namespace WebClient.Net
             Http = new HttpClient();
         }
 
-        public async Task<string> AuthRequest(AuthenticationRequest request)
+        public async Task<bool> AuthRequest(AuthenticationRequest request)
         {
             HttpResponseMessage response = Http.PostAsync(
                 requestUri: GetUrl("Auth"),
@@ -42,25 +42,7 @@ namespace WebClient.Net
 
             _httpContext.Session.SetString("token", jwt);
 
-            /*
-            Uri uri = new Uri(_serverAddress);
-            var cookieJar = new CookieContainer();
-            var responseCookies = cookieJar.GetCookies(uri);
-            foreach (Cookie cookie in responseCookies)
-            {
-                string cookieName = cookie.Name;
-                string cookieValue = cookie.Value;
-            }
-            */
-
-            /*
-            foreach (var cookieHeader in response.Headers.GetValues("Set-Cookie"))
-            {
-
-            }
-                //cookies.SetCookies(new Uri(_serverAddress), cookieHeader);
-            */
-            return jwt;
+            return true;
         }
 
         public async Task<string> RequestAsync(string addr, string content = null, HttpMethod method = null)

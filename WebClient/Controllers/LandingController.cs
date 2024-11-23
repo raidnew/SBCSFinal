@@ -7,10 +7,11 @@ using WebClient.Net;
 
 namespace WebClient.Controllers
 {
+    [Route("[controller]")]
     public class LandingController : BaseMyController
     {
         [HttpGet]
-        [Route("page/{page}")]
+        [Route("page")]
         public IActionResult Page()
         {
             

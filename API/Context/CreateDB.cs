@@ -18,7 +18,11 @@ namespace CSWork21.Data
 
                 if (hasCreated && withTestData)
                 {
-                    await CreateRoles(roleManager, userManager);
+                    //await CreateRoles(roleManager, userManager);
+
+                    Task creator = CreateRoles(roleManager, userManager);
+                    creator.Wait();
+
                     CreateOrdersStatuses(dbcontext);
                     CreateOrders(dbcontext);
                     CreateProjects(dbcontext);

@@ -43,8 +43,9 @@ namespace WebClient.Controllers
                 request.Password = authData.Password;
 
                 ApiConnector apiConnector = new ApiConnector(HttpContext);
-                string jwt = await apiConnector.AuthRequest(request);
-                AuthUserByJwt(jwt);
+                bool isAuth = await apiConnector.AuthRequest(request);
+                //AuthUserByJwt(jwt);
+                if(isAuth) return RedirectToMainPage();
             }
             return View(authData);
         }
