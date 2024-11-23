@@ -25,7 +25,8 @@ namespace API.Controllers
         [HttpGet("GetMenu")]
         public IEnumerable<MenuItem> GetMenu()
         {
-            return _menuData.GetAll();
+            var test =  _menuData.GetAll().OrderBy(item => item.Order);
+            return test;
         }
 
         [HttpGet("GetHeadertext")]

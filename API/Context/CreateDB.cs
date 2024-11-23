@@ -106,11 +106,11 @@ namespace CSWork21.Data
 
         private static void CreateMenu(DBContext dbcontext)
         {
-            dbcontext.Menu.Add(new MenuItem() { Text="MaiN", Link="Home/Index" });
-            dbcontext.Menu.Add(new MenuItem() { Text="ProjectS", Link= "Projects/ShowAll" });
-            dbcontext.Menu.Add(new MenuItem() { Text="ServiceS", Link= "Services/ShowAll" });
-            dbcontext.Menu.Add(new MenuItem() { Text="BlogS", Link= "Blogs/ShowAll" });
-            dbcontext.Menu.Add(new MenuItem() { Text="ContactS", Link= "Contacts/ShowAll" });
+            dbcontext.Menu.Add(new MenuItem() { Text="MaiN", Link="Home/Index", Order = 1 });
+            dbcontext.Menu.Add(new MenuItem() { Text="ProjectS", Link= "Projects/ShowAll", Order = 2 });
+            dbcontext.Menu.Add(new MenuItem() { Text="ServiceS", Link= "Services/ShowAll", Order = 3 });
+            dbcontext.Menu.Add(new MenuItem() { Text="BlogS", Link= "Blogs/ShowAll", Order = 4 });
+            dbcontext.Menu.Add(new MenuItem() { Text="ContactS", Link= "Contacts/ShowAll", Order = 5 });
         }
 
         private static void CreateHeaderTexts(DBContext dbcontext)

@@ -13,16 +13,25 @@ namespace API.Controllers
     public class OrdersController : ControllerBase
     {
         private readonly IEntriesStorage<Order> _ordersData;
+        private readonly IEntriesStorage<OrdersStatus> _ordersStatuses;
 
-        public OrdersController(IEntriesStorage<Order> orders)
+        public OrdersController(IEntriesStorage<Order> orders, IEntriesStorage<OrdersStatus> ordersStatuses)
         {
             _ordersData = orders;
+            _ordersStatuses = ordersStatuses;
         }
 
         [HttpGet("GetList")]
         public IEnumerable<Order> GetList()
         {
             IEnumerable<Order> test = _ordersData.GetAll();
+            return test;
+        }
+
+        [HttpGet("GetStatuses")]
+        public IEnumerable<OrdersStatus> GetStatuses()
+        {
+            IEnumerable<OrdersStatus> test = _ordersStatuses.GetAll();
             return test;
         }
 

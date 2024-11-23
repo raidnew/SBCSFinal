@@ -45,13 +45,6 @@ namespace API.Controllers
                 claimsList.Add(new Claim(ClaimTypes.Authentication, authRequest.Name));
                 claimsList.Add(new Claim(ClaimTypes.NameIdentifier, authRequest.Name));
                 claimsList.Add(new Claim(ClaimTypes.Role, authRequest.Name));
-                //claimsList.Add(new Claim(ClaimTypes.Role, authRequest.Name));
-
-                //new Claim(ClaimTypes.Role, "User"),
-                /*
-                foreach (var role in user.Roles)
-                    claimsList.Add(new Claim(ClaimTypes.Role, role));
-                */
             }
             else
             {
