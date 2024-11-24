@@ -1,25 +1,34 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Net.Http.Headers;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
-using System.Net;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Net.Mime;
-using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using WebClient.Auth;
-using static System.Net.WebRequestMethods;
 
 namespace WebClient.Net
 {
     public class ApiConnector
     {
+        private static ApiConnector _instance;
+
+        public static ApiConnector Instance
+        {
+            get
+            {
+                if (_instance == null)
+                    _instance = new ApiConnector();
+                return _instance;
+            }
+        }
+
         private readonly string _serverAddress;
+        private string _authCookie;
+        private string _authJwt;
         private HttpClient Http { get; set; }
-        private static HttpContext _httpContext => new HttpContextAccessor().HttpContext;
-        public ApiConnector(HttpContext httpContext)
+        private ApiConnector()
         {
             _serverAddress = "http://localhost:5555";
             Http = new HttpClient();
@@ -33,12 +42,11 @@ namespace WebClient.Net
                 mediaType: "application/json")
             ).Result;
             
-            string jwt = await response.Content.ReadAsStringAsync();
+            _authJwt = await response.Content.ReadAsStringAsync();
 
             foreach (var cookieHeader in response.Headers.GetValues("Set-Cookie"))
-                _httpContext.Session.SetString("cookie", cookieHeader);
+                _authCookie = cookieHeader;
 
-            _httpContext.Session.SetString("token", jwt);
 
             return true;
         }
@@ -54,21 +62,28 @@ namespace WebClient.Net
             
 
             HttpRequestMessage request = new HttpRequestMessage(method, GetUrl(addr));
-            string jwt = _httpContext.Session.GetString("token");
 
-            if (!(jwt is null))
-                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer",jwt);
+            if (!(_authJwt is null))
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _authJwt);
 
-            string authCookie = _httpContext.Session.GetString("cookie");
-            if (!(authCookie is null))
-                request.Headers.Add("cookie", authCookie);
+            if (!(_authCookie is null))
+                request.Headers.Add("cookie", _authCookie);
 
             if (content != null)
                 request.Content = new StringContent(content, Encoding.UTF8, "application/json");
 
-            HttpResponseMessage response = await Http.SendAsync(request);
-
-            return await response.Content.ReadAsStringAsync();
+            try
+            {
+                //HttpResponseMessage response = await Http.SendAsync(request);
+                HttpResponseMessage response = await Http.SendAsync(request);
+                return await response.Content.ReadAsStringAsync();
+            }
+            catch (Exception ex)
+            {
+                var test = ex.Message;
+                Trace.WriteLine(test);
+            }
+            return "";
         }
 
         private string GetUrl(string action)

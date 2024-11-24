@@ -6,15 +6,18 @@
 
 <form asp-controller="Landing" asp-action="AddOrder" method="post">
     <div>
+        Name
         <input asp-for="Name" />
     </div>
     <div>
+        Email
         <input asp-for="Email" />
     </div>
     <div>
+        Message
         <input asp-for="Message" />
     </div>
     <div>
-        <button type="submit">Зарегистрироваться</button>
+        <button type="submit">Send</button>
     </div>
 </form>

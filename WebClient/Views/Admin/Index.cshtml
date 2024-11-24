@@ -1,6 +1,83 @@
-﻿@*
+﻿@using API.Models
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
 }
-Adminka
+Blogs
+
+<table class="table">
+    <thead>
+        <tr class="row">
+            <th class="cell">ID</th>
+            <th class="cell">Имя</th>
+            <th class="cell">EMail</th>
+            <th class="cell">Сообщение</th>
+            <th class="cell">Состояние</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (BlogEntry order in ViewBag.blogs)
+        {
+            <tr class="row">
+                <th class="cell">@order.Id</th>
+                <th class="cell">@order.Name</th>
+                <th class="cell">@order.ShortDescription</th>
+                <th class="cell">@order.Description</th>
+                <th class="cell">@order.Id</th>
+            </tr>
+        }
+    </tbody>
+</table>
+
+Contacts
+
+<table class="table">
+    <tbody>
+        @foreach (ContactEntry order in ViewBag.contacts)
+        {
+            <tr class="row">
+                <th class="cell">@order.Id</th>
+                <th class="cell">@order.Name</th>
+                <th class="cell">@order.Address</th>
+            </tr>
+        }
+    </tbody>
+</table>
+
+Orders
+
+<table class="table">
+    <thead>
+        <tr class="row">
+            <th class="cell">ID</th>
+            <th class="cell">Имя</th>
+            <th class="cell">EMail</th>
+            <th class="cell">Сообщение</th>
+            <th class="cell">Состояние</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Order order in ViewBag.orders)
+        {
+            <tr class="row">
+                <th class="cell">@order.Id</th>
+                <th class="cell">@order.Name</th>
+                <th class="cell">@order.Email</th>
+                <th class="cell">@order.Message</th>
+                <th class="cell">@order.StatusId</th>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<table class="table">
+@foreach (ProjectEntry project in ViewBag.projects)
+{
+    <tr>
+            <th>@project.Id</th>
+            <th>@project.Name</th>
+            <th>@project.Description</th>
+    </tr>
+}
+</table>
