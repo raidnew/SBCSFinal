@@ -1,4 +1,7 @@
-﻿using System.Windows;
+﻿using System;
+using System.Runtime.InteropServices;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace View
 {
@@ -10,6 +13,8 @@ namespace View
         public MainWindow()
         {
             InitializeComponent();
+
         }
+
     }
 }

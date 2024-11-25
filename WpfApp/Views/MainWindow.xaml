@@ -3,18 +3,20 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:vm="clr-namespace:ViewModels"
+        xmlns:vm="clr-namespace:ViewModels" xmlns:pages="clr-namespace:WpfApp.Views.Pages"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="650" Width="1000">
     <Window.DataContext>
         <vm:MainWindowVM/>
     </Window.DataContext>
-    <Grid>
+    <Grid Margin="0,0,0,-6" RenderTransformOrigin="0.499,0.508">
+
+        <!--WebBrowser x:Name="webBrowser1" Source="http://localhost:5555" Margin="435,96,10,10"  /-->
+
         <Grid.RowDefinitions>
             <RowDefinition Height="50"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-
         
         <ItemsControl Grid.Row="0" ItemsSource="{Binding MenuItems}" >
             <ItemsControl.ItemsPanel>
@@ -28,13 +30,13 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-        <!--DataGrid Grid.Row="1" ItemsSource="{Binding MenuItems}" AutoGenerateColumns="False">
-            <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Text}"></DataGridTextColumn>
-                <DataGridTextColumn Binding="{Binding Link}"></DataGridTextColumn>
-                <DataGridTextColumn Binding="{Binding Id}"></DataGridTextColumn>
-                <DataGridTextColumn Binding="{Binding Order}"></DataGridTextColumn>
-            </DataGrid.Columns>
-        </DataGrid-->
+
+        <Button HorizontalAlignment="Right" Width="100" Content="{Binding LoginBtnText}" Command="{Binding ClickLogin}"></Button>
+        <Button HorizontalAlignment="Right" Visibility="{Binding ButtonVisible}" Margin="0 0 100 0" Width="100" Content="Admin" Command="{Binding ClickMenuItem}" CommandParameter="ADMIN/INDEX"></Button>
+        <Button HorizontalAlignment="Right" Visibility="{Binding ButtonVisible}" Margin="0 0 200 0" Width="100" Content="Заказы" Command="{Binding ClickMenuItem}" CommandParameter="ORDERS/SHOWALL"></Button>
+
+
+        <Frame  Grid.Row="1" Content="{Binding WindowContent}" Margin="0,42,0,0"/>
+
     </Grid>
 </Window>

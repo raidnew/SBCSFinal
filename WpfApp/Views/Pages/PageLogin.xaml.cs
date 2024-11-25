@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace WpfApp.Views
+namespace WpfApp.Views.Pages
 {
     /// <summary>
-    /// Interaction logic for Projects.xaml
+    /// Interaction logic for PageLogin.xaml
     /// </summary>
-    public partial class Projects : Page
+    public partial class PageLogin : Page
     {
-        public Projects()
+        public PageLogin()
         {
             InitializeComponent();
         }

@@ -9,7 +9,6 @@ namespace WebClient.Controllers
     [Route("[controller]")]
     public class ContactsController : BaseMyController
     {
-        [Authorize]
         [HttpGet]
         [Route("ShowAll")]
         public IActionResult ShowAll()

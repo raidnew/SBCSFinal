@@ -50,7 +50,6 @@ namespace API.Controllers
             {
                 claimsList = new List<Claim>();
                 claimsList.Add(new Claim(ClaimTypes.Name, authRequest.Name));
-                //claimsList.Add(new Claim(ClaimTypes.Anonymous, authRequest.Name));
             }
 
             Claim[] claims = claimsList.ToArray();

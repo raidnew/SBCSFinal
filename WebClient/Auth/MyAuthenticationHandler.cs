@@ -38,38 +38,6 @@ namespace WebClient.Auth
                     claimsPrincipal,
                     this.Scheme.Name));
 
-            /*
-            if (!Request.Headers
-                .ContainsKey(Options.TokenHeaderName))
-            {
-                return AuthenticateResult.Fail($"Missing header: {Options.TokenHeaderName}");
-            }
-
-            //get the header and validate
-            string token = Request
-                .Headers[Options.TokenHeaderName]!;
-
-            //usually, this is where you decrypt a token and/or lookup a database.
-            if (token != "supersecretecode")
-            {
-                return AuthenticateResult
-                    .Fail($"Invalid token.");
-            }
-            //Success! Add details here that identifies the user
-            var claims = new List<Claim>()
-        {
-            new Claim("FirstName", "Juan")
-        };
-
-            var claimsIdentity = new ClaimsIdentity
-                (claims, this.Scheme.Name);
-            var claimsPrincipal = new ClaimsPrincipal
-                (claimsIdentity);
-
-            return AuthenticateResult.Success
-                (new AuthenticationTicket(claimsPrincipal,
-                this.Scheme.Name));
-            */
         }
     }
 }
