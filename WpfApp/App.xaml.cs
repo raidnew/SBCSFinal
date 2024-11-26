@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.ComponentModel;
+using System.Windows;
 using System.Windows.Controls;
 using View;
 using ViewModels;
@@ -30,95 +31,45 @@ namespace WpfApp
             switch (link.ToUpper())
             {
                 case "PROJECTS/SHOWALL":
-                    ShowProjects();
+                    ShowPage(new PageProjects(), new PageProjectVM());
                     break;
                 case "SERVICES/SHOWALL":
-                    ShowServices();
+                    ShowPage(new PageServices(), new PageServicesVM());
                     break;
                 case "BLOGS/SHOWALL":
-                    ShowBlogs();
+                    ShowPage(new PageBlogs(), new PageBlogsVM());
                     break;
                 case "CONTACTS/SHOWALL":
-                    ShowContacts();
+                    ShowPage(new PageContacts(), new PageContactsVM());
                     break;
                 case "ACCOUNT/LOGIN":
                     ShowLogin();
                     break;
                 case "ORDERS/SHOWALL":
-                    ShowOrders();
+                    ShowPage(new PageOrders(), new PageOrdersVM());
                     break;                
                 case "ADMIN/INDEX":
+                    ShowPage(new PageAdmin(), new PageAdminVM());
                     break;
                 case "HOME/INDEX":
-                    ShowLanding();
-                    break;
                 default:
-                    ShowLanding();
+                    ShowPage(new PageLanding(), new PageLandingVM());
                     break;
             }
-        }
-
-        private void ShowLanding()
-        {
-            Page page = new PageLanding();
-            PageLandingVM vm = new PageLandingVM();
-            page.DataContext = vm;
-            mvvm.SetContent(page);
-        }
-
-        private void ShowServices()
-        {
-            Page page = new PageServices();
-            PageServicesVM vm = new PageServicesVM();
-            page.DataContext = vm;
-            mvvm.SetContent(page);
-        }
-
-        private void ShowBlogs()
-        {
-            Page page = new PageBlogs();
-            PageBlogsVM vm = new PageBlogsVM();
-            page.DataContext = vm;
-            mvvm.SetContent(page);
-        }
-
-        private void ShowOrders()
-        {
-            Page page = new PageOrders();
-            PageOrdersVM vm = new PageOrdersVM();
-            page.DataContext = vm;
-            mvvm.SetContent(page);
-        }
-
-        private void ShowContacts()
-        {
-            Page page = new PageContacts();
-            PageContactsVM vm = new PageContactsVM();
-            page.DataContext = vm;
-            mvvm.SetContent(page);
-        }
-
-        private void ShowProjects()
-        {
-            Page page = new PageProjects();
-            PageProjectVM vm = new PageProjectVM();
-            page.DataContext = vm;
-            mvvm.SetContent(page);
         }
 
         private void ShowLogin()
         {
             if (ApiConnector.Instance.GetLoggedName() != null)
-            {
                 ApiConnector.Instance.Logout();
-            }
             else
-            {
-                Page page = new PageLogin();
-                PageLoginVM vm = new PageLoginVM();
-                page.DataContext = vm;
-                mvvm.SetContent(page);
-            }
+                ShowPage(new PageLogin(), new PageLoginVM());
+        }
+
+        private void ShowPage(Page page, INotifyPropertyChanged viewmodel)
+        {
+            page.DataContext = viewmodel;
+            mvvm.SetContent(page);
         }
     }
 }

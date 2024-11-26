@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
@@ -14,7 +15,7 @@ using WebClient.Net;
 
 namespace ViewModels
 {
-    public class PageLandingVM
+    public class PageLandingVM : INotifyPropertyChanged
     {
 
         private ICommand _clickSendOrder;
@@ -30,6 +31,8 @@ namespace ViewModels
         public string Email { get; set; }
         public string Name { get; set; }
         public string Message { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         private void SendOrder()
         {
