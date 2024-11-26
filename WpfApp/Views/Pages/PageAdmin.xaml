@@ -18,7 +18,7 @@
             <RowDefinition Height="20*"/>
         </Grid.RowDefinitions>
         <DataGrid Grid.Row="0" ItemsSource="{Binding ProjectEntries}"></DataGrid>
-        <DataGrid Grid.Row="1" ItemsSource="{Binding ContactsEntries}"></DataGrid>
+        <DataGrid Grid.Row="1" ItemsSource="{Binding OrdersEntries}"></DataGrid>
         <DataGrid Grid.Row="2" ItemsSource="{Binding BlogsEntries}"></DataGrid>
         <DataGrid Grid.Row="3" ItemsSource="{Binding ContactsEntries}"></DataGrid>
     </Grid>

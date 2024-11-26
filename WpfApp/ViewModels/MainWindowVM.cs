@@ -38,6 +38,17 @@ namespace ViewModels
             }
         }
 
+        private Visibility _buttonVisibleAdmin;
+        public Visibility ButtonVisibleAdmin
+        { 
+            get => _buttonVisible; 
+            set 
+            {
+                _buttonVisible = value;
+                OnPropertyChanged("ButtonVisibleAdmin");
+            }
+        }
+
         private ICommand _clickMenuItem;
         private ICommand _clickLogin;
 
@@ -77,11 +88,15 @@ namespace ViewModels
             {
                 LoginBtnText = $"Login";
                 ButtonVisible = Visibility.Hidden;
+                ButtonVisibleAdmin = Visibility.Hidden;
             }
             else
             {
                 LoginBtnText = $"Logout {name}";
                 ButtonVisible = Visibility.Visible;
+                if(name == "admin")
+                    ButtonVisibleAdmin = Visibility.Visible;
+
             }
             OnClickMenu?.Invoke("");
         }

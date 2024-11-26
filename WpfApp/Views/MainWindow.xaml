@@ -32,7 +32,7 @@
         </ItemsControl>
 
         <Button HorizontalAlignment="Right" Width="100" Content="{Binding LoginBtnText}" Command="{Binding ClickLogin}"></Button>
-        <Button HorizontalAlignment="Right" Visibility="{Binding ButtonVisible}" Margin="0 0 100 0" Width="100" Content="Admin" Command="{Binding ClickMenuItem}" CommandParameter="ADMIN/INDEX"></Button>
+        <Button HorizontalAlignment="Right" Visibility="{Binding ButtonVisibleAdmin}" Margin="0 0 100 0" Width="100" Content="Admin" Command="{Binding ClickMenuItem}" CommandParameter="ADMIN/INDEX"></Button>
         <Button HorizontalAlignment="Right" Visibility="{Binding ButtonVisible}" Margin="0 0 200 0" Width="100" Content="Заказы" Command="{Binding ClickMenuItem}" CommandParameter="ORDERS/SHOWALL"></Button>
 
 
