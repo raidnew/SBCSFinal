@@ -17,6 +17,8 @@
             <RowDefinition Height="50"></RowDefinition>
             <RowDefinition Height="50"></RowDefinition>
             <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -27,7 +29,9 @@
         <TextBlock Grid.Row="1">Login</TextBlock>
         <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Login}"></TextBox>
         <TextBlock Grid.Row="2">Password</TextBlock>
-        <TextBox  Grid.Row="2" Grid.Column="1" Text="{Binding Password}"></TextBox> 
+        <TextBox  Grid.Row="2" Grid.Column="1" Text="{Binding Password}"></TextBox>
         <Button Grid.Row="3" Command="{Binding ClickLogin}">Login</Button>
+        <Button Grid.Row="4" Command="{Binding ClickLoginUser}">Login User</Button>
+        <Button Grid.Row="5" Command="{Binding ClickLoginAdmin}">Login Admin</Button>
     </Grid>
 </Page>
